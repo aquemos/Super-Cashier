@@ -42,47 +42,33 @@ def input_item_name(prompt_text):
         print("The input is empty. Please give the correct input")
         return input_item_name(prompt_text)
     
-def input_item_quantity(prompt_text):
-    """Prompt the user to input an item quantity.
+def input_number(prompt_text):
+    """ Prompt the user for a valid numerical input.
+    Specifically, used for price and quantity.
 
     Parameters:
     -----------
     prompt_text : str
-        The prompt text for input.
+        Text prompt displayed to the user.
 
     Returns:
     -----------
-    str: 
-        The item quantity entered by the user if the input is not empty.
+    float: 
+        Valid numerical input provided by the user.
     """
-    quantity = input(prompt_text)
-    if input_not_empty(quantity):
-        return quantity
-    
-    else:
-        print("The input is empty. Please give the correct input")
-        return input_item_quantity(prompt_text)
-    
-def input_item_price(prompt_text):
-    """Prompt the user to input an item price.
-
-    Parameters:
-    -----------
-    prompt_text : str
-        The prompt text for input.
-
-    Returns:
-    -----------
-    str: 
-        The item price entered by the user if the input is not empty.
-    """
-    price = input(prompt_text)
-    if input_not_empty(price):
-        return price
+    number = input(prompt_text)
+    if input_not_empty(number):
+        try:
+            number = float(number)
+            return number
+        
+        except ValueError:
+            print("The input is not a number. Please give the correct input.")
+            return input_number(prompt_text)
     
     else:
         print("The input is empty or only contains empty space. Please give the correct input")
-        return input_item_price(prompt_text)
+        return input_number(prompt_text)
 
 def input_not_empty(value):
     """Check if the input value is not empty or only contains empty space.
@@ -137,8 +123,8 @@ def main():
                 print("=== Add an item to the cart ===")
 
                 item_name = input_item_name('Item Name: ')
-                quantity = input_item_quantity('Quantity: ')
-                price = input_item_price('Price: ')
+                quantity = input_number('Quantity: ')
+                price = input_number('Price: ')
 
                 print(customer.add_item(item_name, quantity, price))
 
@@ -154,7 +140,7 @@ def main():
                 print("=== Update an item price ===")
 
                 item_name = input_item_name('Item Name: ')
-                new_price = input_item_price('New Price: ')
+                new_price = input_number('New Price: ')
 
                 print(customer.update_item_price(item_name, new_price))
                 
@@ -162,7 +148,7 @@ def main():
                 print("=== Update an item quantity ===")
 
                 item_name = input_item_name('Item Name: ')
-                new_quantity = input_item_quantity('New Quantity: ')
+                new_quantity = input_number('New Quantity: ')
 
                 print(customer.update_item_quantity(item_name, new_quantity))
                 
