@@ -51,12 +51,19 @@ def input_number(prompt_text):
     prompt_text : str
         Text prompt displayed to the user.
 
+    Exceptions:
+    -----------
+    ValueError:
+        If the value of price or quantity can not convert into float.
+
     Returns:
     -----------
     float: 
-        Valid numerical input provided by the user.
+        Valid numerical input provided by the user, 
+        if the input could converted into float.
     """
     number = input(prompt_text)
+
     if input_not_empty(number):
         try:
             number = float(number)
