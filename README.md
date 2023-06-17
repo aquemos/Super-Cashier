@@ -13,9 +13,9 @@ The Super Cashier program requires the following features:
 - Allow customers to clear the entire shopping cart.
 - Display the contents of the shopping cart.
 - Calculate the total purchase price, including applicable discounts. The discount rules are as follows:
-  + If the total purchase amount exceeds Rp. 200,000, apply a 5% discount.
-  + If the total purchase amount exceeds Rp. 300,000, apply an 8% discount.
-  + If the total purchase amount exceeds Rp. 500,000, apply a 10% discount.
+  + If the total purchase amount exceeds Rp. 200,000, apply 5% discount.
+  + If the total purchase amount exceeds Rp. 300,000, apply 8% discount.
+  + If the total purchase amount exceeds Rp. 500,000, apply 10% discount.
 - Provide error messages for user input errors.
 
 ## Flowchart
