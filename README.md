@@ -1,4 +1,5 @@
 # Super-Cashier
+Super Cashier is a program created to fulfill the completion of my course on Analytics and Data Science course at Pacmann.
 
 ## Problems Background
 The super cashier program is created to help my friend, Andi (supermarket owner) in managing transactions at his supermarket. This program allows customers to make purchases independently by adding items to the shopping cart and calculating the total price of items in their cart.
@@ -16,3 +17,14 @@ The Super Cashier program requires the following features:
   + If the total purchase amount exceeds Rp. 300,000, apply an 8% discount.
   + If the total purchase amount exceeds Rp. 500,000, apply a 10% discount.
 - Provide error messages for user input errors.
+
+## Flowchart
+
+
+## Code Explanation
+
+
+## Test Case
+
+
+## Conclusion
