@@ -59,7 +59,7 @@ The program code is divided into two files, i.e., **script.py** and **transactio
 ### script.py
 There are several functions in this file, such as display_menu, input_item_name, input_number, input_not_empt, delete_confirmation, and main. Here the explanation of each function code.
 
-#### display_menu
+#### display_menu function
 ```python
 MENU = {
     '1': 'Add Item',
@@ -74,7 +74,6 @@ MENU = {
 }
 
 def display_menu():
-    """ Display the cashier program menu. """
     print("===== Cashier Program Menu =====")
     
     for key, value in MENU.items():
@@ -84,21 +83,9 @@ The code snippet above defines a dictionary called *MENU* that stores options fo
 
 The *display_menu()* function is defined to display the menu to the user. It does not take any arguments and has no return value. The function prints a heading indicating the program menu ("===== Cashier Program Menu ====="), and then iterates over the items in the *MENU* dictionary using a for loop.
 
-#### input_item_name
+#### input_item_name function
 ```python
 def input_item_name(prompt_text):
-    """Prompt the user to input an item name.
-
-    Parameters:
-    -----------
-    prompt_text : str
-        The prompt text for input.
-
-    Returns:
-    -----------
-    str: 
-        The item name entered by the user if the input is not empty.
-    """
     item_name = input(prompt_text)
 
     if input_not_empty(item_name):
@@ -107,6 +94,61 @@ def input_item_name(prompt_text):
     else:
         print("The input is empty. Please give the correct input")
         return input_item_name(prompt_text)
+```
+This function is used to prompt the user to input an item name. It takes one parameter, namely the prompt text to be displayed to the user.
+
+The function follows a recursive approach to handle input validation. It first prompts the user to enter an item name using the *input()* function and storing the result in the *item_name* variable.
+
+Next, it calls a function named *input_not_empty(item_name)* to check if the input is not empty. If the input is not empty, the function capitalizes the item name using the *capitalize()* method and returns it. Otherwise, the function displays a message indicating that the input is empty and prompts the user again by calling the *input_item_name(prompt_text)* function recursively. This means the function will continue asking for input until a non-empty value is provided.
+
+#### input_number function
+```python
+def input_number(prompt_text):
+    number = input(prompt_text)
+
+    if input_not_empty(number):
+        try:
+            number = float(number)
+            return number
+        
+        except ValueError:
+            print("The input is not a number. Please give the correct input.")
+            return input_number(prompt_text)
+    
+    else:
+        print("The input is empty or only contains empty space. Please give the correct input")
+        return input_number(prompt_text)
+```
+This function prompts the user for a valid numerical input. The function takes one parameter, i.e., the text prompt displayed to the user. This function is used to get the input for price and quantity.
+
+The function follows a recursive approach to handle input validation. It first prompts the user to enter a number using the *input()* function and storing the result in the *number* variable.
+
+Next, it calls a function named *input_not_empty(item_name)* to check if the input is not empty. If the input is not empty, the function attempts to convert the number variable to a float using the *float()* function. While, if the input is empty, the function displays a message indicating that the input is empty and prompts the user again by calling *input_number(prompt_text)* function again.
+
+If the conversion of input to float is success, the function returns the converted number. If ValueError raised during the conversion, the function displays a message indicating that the input is not a number, and it calls *input_number(prompt_text)* recursively.
+
+#### input_not_empty function
+```python
+def input_not_empty(value):
+    if value.strip():
+        return True
+    
+    else:
+        return False
+```
+This function checks if an input value is not empty or only contains empty spaces. The function takes one input argument to be checked. To check if the input is not empty, the *strip()* method is used. If the input is not empty, it will return True. Otherwise, return False.
+
+#### delete_confirmation function
+```python
+def delete_confirmation(prompt_text):
+    choice = input(f"Are you sure to delete {prompt_text}? (y/n) ").lower()
+
+    if choice=='y' or choice=='n':
+        return choice
+    
+    else:
+        print("Please input y or n")
+        return delete_confirmation(prompt_text)
 ```
 
 
