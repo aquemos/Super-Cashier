@@ -475,6 +475,12 @@ This method is used to check the current order in the cart. If the cart is empty
 This method calculates the total price of the cart by summing the total price of each item. It applies any applicable discounts based on the predefined DISCOUNTS dictionary. The method returns a dictionary containing the total price, discount percentage, and total price after discount if the cart is not empty. If the cart is empty, a message to inform that the cart is empty is returned.
 
 ## How to Use
+1. Create a new directory for your project: Choose a directory where you want to set up your project and navigate to it using the command line or terminal.
+2. Set up a virtual environment: Create a new virtual environment for your project. This step ensures that the project dependencies are isolated from your system's Python installation.
+3. Activate the virtual environment: Activate the virtual environment to use the isolated Python environment for your project.
+4. Install pandas library: With the virtual environment activated, install the pandas library.
+5. Download the code from GitHub: Clone or download the code from the GitHub repository and extract it into your project directory.
+6. Run the code: Open a text editor or an integrated development environment (IDE), navigate to the project directory, and locate the Python file containing the code you downloaded. Open the script.py file and execute it using Python.
 
 ## Test Case
 
