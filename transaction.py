@@ -30,8 +30,8 @@ class Transaction:
         Deletes an item from the shopping cart.
     reset_transaction()
         Resets the transaction by emptying the shopping cart.
-    get_item_index(item_name)
-        Retrieves the index of an item in the shopping cart.
+    is_in_cart(item_name)
+        Check if the item is exist in the cart.
     check_order()
         Displaying the transaction ID and the contents of the shopping cart.
     total_price()
@@ -85,9 +85,13 @@ class Transaction:
         message : str
             A message indicating the success or failure of adding the item to the cart.
         """
-        index_item = self.get_item_index(item_name)
+        status = self.is_in_cart(item_name)
         
-        if index_item.empty:
+        if status:
+            message = f"{item_name} already in the cart. Choose display to show your cart"
+            return message
+                        
+        else:
             try:
                 quantity = float(quantity)
 
@@ -110,9 +114,6 @@ class Transaction:
                 message ="Quantity of item is not a number"
                 return message
             
-        else:
-            message = f"{item_name} already in the cart. Choose display to show your cart"
-            return message
 
     def update_item_name(self, old_item_name, new_item_name):
         """ Updates the name of an item in the cart from the old name 
@@ -131,17 +132,16 @@ class Transaction:
         str: 
             A message indicating whether the update was successful or an error message.
         """
-        index_item = self.get_item_index(old_item_name)
+        status = self.is_in_cart(old_item_name)
 
-        if index_item.empty:
-            message = f"Product {old_item_name} does not exist"
+        if status:
+            self.cart.loc[self.cart['Item Name']==old_item_name, 'Item Name'] = new_item_name
+
+            message = f"Update {old_item_name} to {new_item_name} success"
             return message
         
         else:
-            index_item = self.get_item_index(old_item_name)
-            self.cart.loc[index_item, 'Item Name'] = new_item_name
-
-            message = f"Update {old_item_name} to {new_item_name} success"
+            message = f"Product {old_item_name} does not exist"
             return message
 
     def update_item_quantity(self, item_name, new_quantity):
@@ -165,18 +165,15 @@ class Transaction:
         str: 
             A message indicating whether the update was successful or an error message.
         """
-        index_item = self.get_item_index(item_name)
-        if index_item.empty:
-            message = f"Product {item_name} does not exist"
-            return message
-            
-        else:
+        status = self.is_in_cart(item_name)
+
+        if status:
             try:
                 new_quantity = float(new_quantity)
 
-                self.cart.loc[index_item, 'Quantity'] = new_quantity
-                price = self.cart.loc[index_item, 'Price/Item']
-                self.cart.loc[index_item, 'Total Price/Item'] = new_quantity * price
+                self.cart.loc[self.cart['Item Name']==item_name, 'Quantity'] = new_quantity
+                price = self.cart.loc[self.cart['Item Name']==item_name, 'Price/Item'].values[0]
+                self.cart.loc[self.cart['Item Name']==item_name, 'Total Price/Item'] = new_quantity * price
 
                 message = f"Update quantity of {item_name} success"
                 return message
@@ -184,6 +181,10 @@ class Transaction:
             except ValueError:
                 message = "Quantity is not a number"
                 return message
+            
+        else:
+            message = f"Product {item_name} does not exist"
+            return message
 
     def update_item_price(self, item_name, new_price):
         """ Updates the price of an item in the cart to the new price if it is exist in the cart.
@@ -207,18 +208,14 @@ class Transaction:
         str: 
             A message indicating whether the update was successful or an error message.
         """
-        index_item = self.get_item_index(item_name)
-        if index_item.empty:
-            message = f"Product {item_name} does not exist"
-            return message
-            
-        else:
+        status = self.is_in_cart(item_name)
+        if status:
             try:
                 new_price = float(new_price)
 
-                self.cart.loc[index_item, 'Price/Item'] = new_price
-                quantity = self.cart.loc[index_item, 'Quantity']
-                self.cart.loc[index_item, 'Total Price/Item'] = quantity * new_price
+                self.cart.loc[self.cart['Item Name']==item_name, 'Price/Item'] = new_price
+                quantity = self.cart.loc[self.cart['Item Name']==item_name, 'Quantity'].values[0]
+                self.cart.loc[self.cart['Item Name']==item_name, 'Total Price/Item'] = quantity * new_price
 
                 message = f"Update price of {item_name} success"
                 return message
@@ -226,6 +223,10 @@ class Transaction:
             except ValueError:
                 message = "Price is not a number"
                 return message
+            
+        else:
+            message = f"Product {item_name} does not exist"
+            return message            
 
     def delete_item(self, item_name):
         """ Removes an item from the cart based on the provided item name.
@@ -248,18 +249,18 @@ class Transaction:
             return message
         
         else:
-            index_item = self.get_item_index(item_name)
+            status = self.is_in_cart(item_name)
 
-            if index_item.empty:
-                message = f"Product {item_name} does not exist"
-                return message
-            
-            else:
+            if status:
                 item_index = self.cart[self.cart["Item Name"] == item_name].index
                 self.cart = self.cart.drop(item_index)
                 self.cart = self.cart.reset_index(drop=True)
 
                 message = f"Product {item_name} is deleted"
+                return message
+            
+            else:
+                message = f"Product {item_name} does not exist"
                 return message
           
     def reset_transaction(self):
@@ -280,8 +281,8 @@ class Transaction:
             message = "All items in Cart deleted"
             return message
 
-    def get_item_index(self, item_name):
-        """ Retrieves the index of an item in the cart based on the item name.
+    def is_in_cart(self, item_name):
+        """ Check if the item is in the cart.
 
         Parameters:
         -----------
@@ -290,11 +291,12 @@ class Transaction:
 
         Returns:
         -----------
-        pandas.Index: 
-            The index of the item in the cart DataFrame.
+        status: bool
+            If the item is in the cart, return False,
+            otherwise return True.
         """
-        index_item = self.cart.loc[self.cart['Item Name'] == item_name].index
-        return index_item 
+        status = self.cart['Item Name'].isin([item_name]).any()
+        return status 
    
     def check_order(self):
         """ This method checks the current order in the cart.
@@ -318,6 +320,7 @@ class Transaction:
             self.cart.set_index(self.cart.index+1, inplace=True)
             return {"Transaction ID" : self.id_transaction, 
                     "Cart": self.cart}
+        
 
     def total_price(self):
         """ Calculates the total price of the cart by summing the total price of each item.
