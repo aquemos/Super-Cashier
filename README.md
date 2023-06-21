@@ -483,7 +483,7 @@ This method calculates the total price of the cart by summing the total price of
 ## Test Case
 
 ### 1. Add item to the cart
-![Add Item Test case 1-1](https://github.com/aquemos/Super-Cashier/tree/main/test%20case%20result](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-1.PNG)
+![Add Item Test case 1-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-1.PNG)
 ![Add Item Test Case 1-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-2.PNG)
 ![Add Item Test Case 1-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-3.PNG)
 
