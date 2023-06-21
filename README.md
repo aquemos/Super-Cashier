@@ -483,29 +483,29 @@ This method calculates the total price of the cart by summing the total price of
 ## Test Case
 
 ### 1. Add item to the cart
-![https://github.com/aquemos/Super-Cashier/tree/main/test%20case%20result](Add Item Test case 1-1)
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-2.PNG](Add Item Test Case 1-2)
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-3.PNG](Add Item Test Case 1-3)
+![Add Item Test case 1-1](https://github.com/aquemos/Super-Cashier/tree/main/test%20case%20result)
+![Add Item Test Case 1-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-2.PNG)
+![Add Item Test Case 1-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-3.PNG)
 
 ### 2. Update item name
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%202.PNG](Update Item Test Case 2)
+![Update Item Test Case 2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%202.PNG)
 
 ### 3. Update item price
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%203.PNG](Update Item Price Case 3)
+![Update Item Price Case 3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%203.PNG)
 
 ### 4. Update item quantity
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%204.PNG](Update Item Quantity Case 4)
+![Update Item Quantity Case 4](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%204.PNG)
 
 ### 5. Show Cart
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%205.PNG](Show Cart Case 5)
+![Show Cart Case 5](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%205.PNG)
 
 ### 6. Calculate total
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%206.PNG](Calculate Total Case 6)
+![Calculate Total Case 6](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%206.PNG)
 
 ### 7. Delete an Item
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207.PNG](Delete an Item Case 7)
+![Delete an Item Case 7](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207.PNG)
 
 ### 8. Delete all items
-![https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208.PNG](Delete all Items Case 8)
+![Delete all Items Case 8](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208.PNG)
 
 ## Conclusion
