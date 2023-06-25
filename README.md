@@ -26,26 +26,8 @@ The flowchart consists of several sub-flowcharts, namely the main menu, add item
 ### Main Menu Flowchart
 ![Main Menu Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/main%20menu.png)
 
-When the program is executed, the following steps will be sequentially executed:
-
-1. Transaction ID and an empty dataframe will be created. The transaction ID is used to identify the transaction, and the dataframe functions to store information about items, quantity, price, and total price per item.
-2. Menu is displayed.
-3. Customer chooses one of the menus.
-4. If the user's choice is not in the menu, an error message will be displayed, and the program will return to step 2.
-5. If the input is in the menu, a check will be performed.
-- If "Add item" is selected, the "Add item" function will be executed.
-- If "Edit item name" is selected, the "Edit item name" function will be executed.
-- If "Edit item price" is selected, the "Edit item price" function will be executed.
-- If "Edit item quantity" is selected, the "Edit item quantity" function will be executed.
-- If "Delete item" is selected, the "Delete item" function will be executed.
-- If "Delete all items" is selected, the "Delete all items" function will be executed.
-- If "Calculate total" is selected, the "Calculate total" function will be executed.
-- If "Exit" is selected, the program will stop.
-6. If it's not one of the menu options, display an error message and return to step 2.
-
 ### Add Item Flowchart
 ![Add Item Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/add%20item.png)
-
 
 ### Update Item Name Flowchart
 ![Update Item Name Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/update%20item%20name.png)
@@ -73,7 +55,7 @@ When the program is executed, the following steps will be sequentially executed:
 The program code is divided into two files, i.e., **script.py** and **transaction.py**.
 
 ### script.py
-There are several functions in this file, such as display_menu, input_item_name, input_number, input_not_empt, delete_confirmation, and main. Here the explanation of each function code.
+There are several functions in this file, such as display_menu, input_item_name, input_number, input_not_empty, delete_confirmation, and main. Here the explanation of each function code.
 
 #### display_menu function
 ```python
@@ -302,10 +284,14 @@ When a new instance of the Transaction class initializes, the transaction ID and
 
 #### add_item method
 ```python
-    def add_item(self, item_name, quantity, price):
-        index_item = self.get_item_index(item_name)
+def add_item(self, item_name, quantity, price):
+        status = self.is_in_cart(item_name)
         
-        if index_item.empty:
+        if status:
+            message = f"{item_name} already in the cart. Choose display to show your cart"
+            return message
+                        
+        else:
             try:
                 quantity = float(quantity)
 
@@ -327,46 +313,38 @@ When a new instance of the Transaction class initializes, the transaction ID and
             except ValueError:
                 message ="Quantity of item is not a number"
                 return message
-            
-        else:
-            message = f"{item_name} already in the cart. Choose display to show your cart"
-            return message
 ```
 The add_item method is used to add a new item to the shopping cart with the provided name, quantity, and price. If the item is already in the cart, a notification message that the item is already in the cart is given. If the item does not exist in the cart, the typecasting of quantity and price into float is carried out. It will return an error message if the typecasting of quantity and price is not successful. While the typecasting process is successful, the total price is calculated. The item name, price, quantity, and total price are attached to the DataFrame cart.
 
 #### update_item_name method
 ```python
-    def update_item_name(self, old_item_name, new_item_name):
-        index_item = self.get_item_index(old_item_name)
+def update_item_name(self, old_item_name, new_item_name):
+        status = self.is_in_cart(old_item_name)
 
-        if index_item.empty:
-            message = f"Product {old_item_name} does not exist"
+        if status:
+            self.cart.loc[self.cart['Item Name']==old_item_name, 'Item Name'] = new_item_name
+
+            message = f"Update {old_item_name} to {new_item_name} success"
             return message
         
         else:
-            index_item = self.get_item_index(old_item_name)
-            self.cart.loc[index_item, 'Item Name'] = new_item_name
-
-            message = f"Update {old_item_name} to {new_item_name} success"
+            message = f"Product {old_item_name} does not exist"
             return message
 ```
 This method is used to update the name of an item in the cart from the old name to the new name if the item exists in the cart. If the item does not exist in the cart, the error message that the item does not exist is returned.
 
 #### update_item_quantity method
 ```python
-def update_item_quantity(self, item_name, new_quantity):
-        index_item = self.get_item_index(item_name)
-        if index_item.empty:
-            message = f"Product {item_name} does not exist"
-            return message
-            
-        else:
+ def update_item_quantity(self, item_name, new_quantity):
+        status = self.is_in_cart(item_name)
+
+        if status:
             try:
                 new_quantity = float(new_quantity)
 
-                self.cart.loc[index_item, 'Quantity'] = new_quantity
-                price = self.cart.loc[index_item, 'Price/Item']
-                self.cart.loc[index_item, 'Total Price/Item'] = new_quantity * price
+                self.cart.loc[self.cart['Item Name']==item_name, 'Quantity'] = new_quantity
+                price = self.cart.loc[self.cart['Item Name']==item_name, 'Price/Item'].values[0]
+                self.cart.loc[self.cart['Item Name']==item_name, 'Total Price/Item'] = new_quantity * price
 
                 message = f"Update quantity of {item_name} success"
                 return message
@@ -374,24 +352,24 @@ def update_item_quantity(self, item_name, new_quantity):
             except ValueError:
                 message = "Quantity is not a number"
                 return message
+            
+        else:
+            message = f"Product {item_name} does not exist"
+            return message
 ```
 This method is used to update the quantity of an item in the cart to the new quantity if the item exists in the cart. If the item does not exist in the cart, an error message to inform that the item does not exist is returned. Additionally, if the new quantity is not a valid number, an error message to inform the new quantity is not a number is returned.
 
-#### update_item_price quantity
+#### update_item_price
 ```python
-    def update_item_price(self, item_name, new_price):
-        index_item = self.get_item_index(item_name)
-        if index_item.empty:
-            message = f"Product {item_name} does not exist"
-            return message
-            
-        else:
+def update_item_price(self, item_name, new_price):
+        status = self.is_in_cart(item_name)
+        if status:
             try:
                 new_price = float(new_price)
 
-                self.cart.loc[index_item, 'Price/Item'] = new_price
-                quantity = self.cart.loc[index_item, 'Quantity']
-                self.cart.loc[index_item, 'Total Price/Item'] = quantity * new_price
+                self.cart.loc[self.cart['Item Name']==item_name, 'Price/Item'] = new_price
+                quantity = self.cart.loc[self.cart['Item Name']==item_name, 'Quantity'].values[0]
+                self.cart.loc[self.cart['Item Name']==item_name, 'Total Price/Item'] = quantity * new_price
 
                 message = f"Update price of {item_name} success"
                 return message
@@ -399,6 +377,10 @@ This method is used to update the quantity of an item in the cart to the new qua
             except ValueError:
                 message = "Price is not a number"
                 return message
+            
+        else:
+            message = f"Product {item_name} does not exist"
+            return message
 ```
 This method is used to update the price of an item in the cart to the new price if the item exists in the cart. If the item does not exist in the cart, an error message to inform that the item does not exist in the cart is returned. Additionally, if the new price is not a valid number, an error message that informs the price is not a number is returned.
 
@@ -410,25 +392,25 @@ def delete_item(self, item_name):
             return message
         
         else:
-            index_item = self.get_item_index(item_name)
+            status = self.is_in_cart(item_name)
 
-            if index_item.empty:
-                message = f"Product {item_name} does not exist"
-                return message
-            
-            else:
+            if status:
                 item_index = self.cart[self.cart["Item Name"] == item_name].index
                 self.cart = self.cart.drop(item_index)
                 self.cart = self.cart.reset_index(drop=True)
 
                 message = f"Product {item_name} is deleted"
                 return message
+            
+            else:
+                message = f"Product {item_name} does not exist"
+                return message
 ```
 This method is used to remove an item from the cart based on the provided item name. If the cart is empty, it will return a message that the cart is empty. If the item does not exist in the cart, a message that informs the item does not exist is returned. If the item exists in the cart, the method deletes the item.
 
 #### reset_transaction method
 ```python
-def reset_transaction(self):
+ def reset_transaction(self):
         if self.cart.empty:
             message = "Cart is empty"
             return message
@@ -440,13 +422,13 @@ def reset_transaction(self):
 ```
 This method is used to reset the transaction by clearing the cart. If the cart is empty, it returns a message indicating that the cart is empty. Otherwise, it removes all items from the cart by dropping all rows from the cart DataFrame. After clearing the cart, it returns a message indicating that all items in the cart have been deleted.
 
-#### get_item_index method
+#### is_in_cart method
 ```python
-    def get_item_index(self, item_name):
-        index_item = self.cart.loc[self.cart['Item Name'] == item_name].index
-        return index_item 
+ def is_in_cart(self, item_name):
+        status = self.cart['Item Name'].isin([item_name]).any()
+        return status 
 ```
-This method is used to retrieve the index of an item in the cart based on its name. It takes an item_name parameter and returns a pandas Index object representing the index of the item in the cart DataFrame. 
+This method is used to check, is the item is in the cart. It will return True, if the item is in the cart, otherwise return False.
 
 #### check_order method
 ```python
@@ -466,7 +448,18 @@ This method is used to check the current order in the cart. If the cart is empty
 
 #### total_price method
 ```python
-    def total_price(self):
+def total_price(self):
+        """ Calculates the total price of the cart by summing the total price of each item.
+        It applies any applicable discounts based on the predefined DISCOUNTS dictionary.
+        It returns the total price, discount percentage, and total price after discount.
+        If the cart is empty, it returns an appropriate message.
+
+        Returns:
+        dict: 
+            A dictionary containing the total price, discount, and total price after discount.
+        str:
+            A message indicating whether the cart is empty.
+        """
         if self.cart.empty:
             message = "Cart is empty"
             return message
@@ -490,6 +483,7 @@ This method is used to check the current order in the cart. If the cart is empty
 ```
 This method calculates the total price of the cart by summing the total price of each item. It applies any applicable discounts based on the predefined DISCOUNTS dictionary. The method returns a dictionary containing the total price, discount percentage, and total price after discount if the cart is not empty. If the cart is empty, a message to inform that the cart is empty is returned.
 
+
 ## How to Use
 1. Create a new directory for your project: Choose a directory where you want to set up your project and navigate to it using the command line or terminal.
 2. Set up a virtual environment: Create a new virtual environment for your project. This step ensures that the project dependencies are isolated from your system's Python installation.
@@ -507,8 +501,11 @@ The customer wants to add 3 items to the cart. Here is the information on items 
 - Item name: mouse, Quantity: 1, Price: 115000
 
 To add each item to the cart, add item function is used. Here is the expected result after adding each item to the cart:
+
 ![Add Item Test Case 1-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201.PNG)
+
 ![Add Item Test case 1-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-1.PNG)
+
 ![Add Item Test Case 1-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-2.PNG)
 
 ### 2. Update item name
@@ -517,43 +514,55 @@ The Customer needs to edit the item name in the cart. Here is the information on
 - Old item name: keyboard, new item name: keyboard logi
 
 To edit the name of each item in the cart, the update_item_name function is used. Here is the expected result after updating item names:
+
 ![Update Item Test Case 2-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%202.PNG)
+
 ![Update Item Test Case 2-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%202.PNG)
 
 ### 3. Update item price
 The price of the keyboard logi is wrong and the customer needs to change it to 175500. The update_item_price function is used to perform this task. Here is the expected output:
+
 ![Update Item Price Case 3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%203.PNG)
 
 ### 4. Update item quantity
 The customer is adding one more mouse pad. To update the quantity of this item, the update_item_quantity is used. Here is the expected output:
+
 ![Update Item Quantity Case 4](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%204.PNG)
 
 ### 5. Show Cart
 The customer wants to see the list of items in the cart. The check_order function is used to show the cart. Here is the expected output:
+
 ![Show Cart Case 5](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%205.PNG)
 
 ### 6. Calculate total
 The customer wants to know the total price of all items in the cart. The total_price function is used to show the total. Here is the expected output:
+
 ![Calculate Total Case 6](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%206.PNG)
 
 ### 7. Delete an Item
 The customer decided not to purchase the mouse robot. Therefore, the mouse robot needs to be removed from the cart. The delete_item function is used to remove this item. Here is the expected result when the item is deleted:
+
 ![Delete an Item Case 7-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207.PNG)
 
 The robot mouse has been removed from the cart.
+
 ![Delete an Item Case 7-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207-1.PNG)
 
 The total price changed after the item was removed.
+
 ![Delete an Item Case 7-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207-2.PNG)
 
 ### 8. Delete all items
 The customer decided not to purchase all the items because they received a message that their sibling had already bought everything they wanted to purchase. The reset_transaction function is used to delete all the items in the cart. Here is the expected result:
+
 ![Delete all Items Case 8-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208.PNG)
 
 After the all items are deleted, the cart is empty.
+
 ![Delete all Items Case 8-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208-1.PNG)
 
 Since the cart is empty, calculating the total price will inform the customer that the cart is empty.
+
 ![Delete all Items Case 8-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208-2.PNG)
 
 ## Conclusion and Future Works
