@@ -25,9 +25,26 @@ The flowchart consists of several sub-flowcharts, namely the main menu, add item
 
 ### Main Menu Flowchart
 ![Main Menu Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/main%20menu.png)
+When the program is executed, the following steps will be sequentially executed:
+
+1. Transaction ID and an empty dataframe will be created. The transaction ID is used to identify the transaction, and the dataframe functions to store information about items, quantity, price, and total price per item.
+2. Menu is displayed.
+3. Customer chooses one of the menus.
+4. If the user's choice is not in the menu, an error message will be displayed, and the program will return to step 2.
+5. If the input is in the menu, a check will be performed.
+- If "Add item" is selected, the "Add item" function will be executed.
+- If "Edit item name" is selected, the "Edit item name" function will be executed.
+- If "Edit item price" is selected, the "Edit item price" function will be executed.
+- If "Edit item quantity" is selected, the "Edit item quantity" function will be executed.
+- If "Delete item" is selected, the "Delete item" function will be executed.
+- If "Delete all items" is selected, the "Delete all items" function will be executed.
+- If "Calculate total" is selected, the "Calculate total" function will be executed.
+- If "Exit" is selected, the program will stop.
+6. If it's not one of the menu options, display an error message and return to step 2.
 
 ### Add Item Flowchart
 ![Add Item Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/add%20item.png)
+
 
 ### Update Item Name Flowchart
 ![Update Item Name Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/update%20item%20name.png)
