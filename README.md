@@ -25,6 +25,7 @@ The flowchart consists of several sub-flowcharts, namely the main menu, add item
 
 ### Main Menu Flowchart
 ![Main Menu Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/main%20menu.png)
+
 When the program is executed, the following steps will be sequentially executed:
 
 1. Transaction ID and an empty dataframe will be created. The transaction ID is used to identify the transaction, and the dataframe functions to store information about items, quantity, price, and total price per item.
