@@ -27,7 +27,7 @@ The flowchart consists of several sub-flowcharts, namely the main menu, add item
 ![Main Menu Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/main%20menu.png)
 
 ### Add Item Flowchart
-![Add Item Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/add%20item.png)
+![Add Item Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/add%20item_new.png)
 
 ### Update Item Name Flowchart
 ![Update Item Name Flowchart](https://github.com/aquemos/Super-Cashier/blob/main/image/update%20item%20name.png)
