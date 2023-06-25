@@ -483,30 +483,60 @@ This method calculates the total price of the cart by summing the total price of
 ## Test Case
 
 ### 1. Add item to the cart
-![Add Item Test case 1-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-1.PNG)
-![Add Item Test Case 1-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-2.PNG)
-![Add Item Test Case 1-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-3.PNG)
+The customer wants to add 3 items to the cart. Here is the information on items added to the cart:
+- Item name: keyboard, Quantity: 1, Price: 185000
+- Item name: mouse pad, Quantity: 2, Price: 56000
+- Item name: mouse, Quantity: 1, Price: 115000
+
+To add each item to the cart, add item function is used. Here is the expected result after adding each item to the cart:
+![Add Item Test Case 1-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201.PNG)
+![Add Item Test case 1-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-1.PNG)
+![Add Item Test Case 1-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%201-2.PNG)
 
 ### 2. Update item name
-![Update Item Test Case 2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%202.PNG)
+The Customer needs to edit the item name in the cart. Here is the information on the items that changed:
+- Old item name: mouse, new item name: mouse robot
+- Old item name: keyboard, new item name: keyboard logi
+
+To edit the name of each item in the cart, the update_item_name function is used. Here is the expected result after updating item names:
+![Update Item Test Case 2-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%202.PNG)
+![Update Item Test Case 2-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%202.PNG)
 
 ### 3. Update item price
+The price of the keyboard logi is wrong and the customer needs to change it to 175500. The update_item_price function is used to perform this task. Here is the expected output:
 ![Update Item Price Case 3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%203.PNG)
 
 ### 4. Update item quantity
+The customer is adding one more mouse pad. To update the quantity of this item, the update_item_quantity is used. Here is the expected output:
 ![Update Item Quantity Case 4](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%204.PNG)
 
 ### 5. Show Cart
+The customer wants to see the list of items in the cart. The check_order function is used to show the cart. Here is the expected output:
 ![Show Cart Case 5](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%205.PNG)
 
 ### 6. Calculate total
+The customer wants to know the total price of all items in the cart. The total_price function is used to show the total. Here is the expected output:
 ![Calculate Total Case 6](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%206.PNG)
 
 ### 7. Delete an Item
-![Delete an Item Case 7](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207.PNG)
+The customer decided not to purchase the mouse robot. Therefore, the mouse robot needs to be removed from the cart. The delete_item function is used to remove this item. Here is the expected result when the item is deleted:
+![Delete an Item Case 7-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207.PNG)
+
+The robot mouse has been removed from the cart.
+![Delete an Item Case 7-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207-1.PNG)
+
+The total price changed after the item was removed.
+![Delete an Item Case 7-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%207-2.PNG)
 
 ### 8. Delete all items
-![Delete all Items Case 8](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208.PNG)
+The customer decided not to purchase all the items because they received a message that their sibling had already bought everything they wanted to purchase. The reset_transaction function is used to delete all the items in the cart. Here is the expected result:
+![Delete all Items Case 8-1](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208.PNG)
+
+After the all items are deleted, the cart is empty.
+![Delete all Items Case 8-2](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208-1.PNG)
+
+Since the cart is empty, calculating the total price will inform the customer that the cart is empty.
+![Delete all Items Case 8-3](https://github.com/aquemos/Super-Cashier/blob/main/test%20case%20result/test%20case%208-2.PNG)
 
 ## Conclusion and Future Works
 To assist Andi in creating a super cashier system, a Python program has been developed. Two Python files were created for this task, namely script.py and transaction.py. The script.py file serves as the main program and transaction.py contains the methods used for transactions. The code has been thoroughly tested using various test cases, and the results of these tests have successfully met Andi's required features.
