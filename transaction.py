@@ -292,8 +292,8 @@ class Transaction:
         Returns:
         -----------
         status: bool
-            If the item is in the cart, return False,
-            otherwise return True.
+            If the item is in the cart, return True,
+            otherwise return False.
         """
         status = self.cart['Item Name'].isin([item_name]).any()
         return status 
